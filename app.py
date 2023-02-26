@@ -1,6 +1,5 @@
 import sys
 from PyQt5 import QtWidgets, uic
-
 from output import Ui_MainWindow
 
 
