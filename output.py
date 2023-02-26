@@ -14,11 +14,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(765, 462)
+        MainWindow.resize(566, 427)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.BaseLayout = QtWidgets.QFrame(self.centralwidget)
-        self.BaseLayout.setGeometry(QtCore.QRect(170, 80, 551, 321))
+        self.BaseLayout.setGeometry(QtCore.QRect(0, 60, 551, 321))
         self.BaseLayout.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.BaseLayout.setFrameShadow(QtWidgets.QFrame.Raised)
         self.BaseLayout.setObjectName("BaseLayout")
@@ -109,7 +109,7 @@ class Ui_MainWindow(object):
         self.border_4.setText("")
         self.border_4.setObjectName("border_4")
         self.pushButton_9 = QtWidgets.QPushButton(self.ManagePannel)
-        self.pushButton_9.setGeometry(QtCore.QRect(54, 10, 31, 28))
+        self.pushButton_9.setGeometry(QtCore.QRect(56, 10, 31, 28))
         self.pushButton_9.setStyleSheet("font-family: \'Handjet\';\n"
 "font-style: normal;\n"
 "font-weight: 400;\n"
@@ -129,6 +129,7 @@ class Ui_MainWindow(object):
         self.pushButton_9.setObjectName("pushButton_9")
         self.DescriptionLayout = QtWidgets.QFrame(self.BaseLayout)
         self.DescriptionLayout.setGeometry(QtCore.QRect(0, 80, 551, 241))
+        self.DescriptionLayout.setStyleSheet("background: rgba(34, 34, 34, 0);")
         self.DescriptionLayout.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.DescriptionLayout.setFrameShadow(QtWidgets.QFrame.Raised)
         self.DescriptionLayout.setObjectName("DescriptionLayout")
@@ -189,11 +190,87 @@ class Ui_MainWindow(object):
 "")
         self.label_4.setAlignment(QtCore.Qt.AlignCenter)
         self.label_4.setObjectName("label_4")
+        self.scrollArea = QtWidgets.QScrollArea(self.BaseLayout)
+        self.scrollArea.setGeometry(QtCore.QRect(200, 90, 351, 181))
+        self.scrollArea.setStyleSheet("background: rgba(34, 34, 34, 0);\n"
+"border: 0px")
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignHCenter)
+        self.scrollArea.setObjectName("scrollArea")
+        self.scrollAreaWidgetContents = QtWidgets.QWidget()
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 351, 181))
+        self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
+        self.LoadLabel_2 = QtWidgets.QFrame(self.scrollAreaWidgetContents)
+        self.LoadLabel_2.setGeometry(QtCore.QRect(0, 10, 350, 71))
+        self.LoadLabel_2.setStyleSheet("background: #222222;\n"
+"paffing: 10px;")
+        self.LoadLabel_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.LoadLabel_2.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.LoadLabel_2.setObjectName("LoadLabel_2")
+        self.LoadLabel_path_4 = QtWidgets.QLabel(self.LoadLabel_2)
+        self.LoadLabel_path_4.setGeometry(QtCore.QRect(0, 32, 171, 31))
+        self.LoadLabel_path_4.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.LoadLabel_path_4.setStyleSheet("background: rgba(34, 34, 34, 0);\n"
+"font-family: \'Inter\';\n"
+"font-style: normal;\n"
+"font-weight: 200;\n"
+"font-size: 13px;\n"
+"line-height: 16px;\n"
+"\n"
+"color: #FFFFFF;\n"
+"")
+        self.LoadLabel_path_4.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.LoadLabel_path_4.setObjectName("LoadLabel_path_4")
+        self.LoadLabel_name_4 = QtWidgets.QLabel(self.LoadLabel_2)
+        self.LoadLabel_name_4.setGeometry(QtCore.QRect(0, 0, 261, 31))
+        self.LoadLabel_name_4.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.LoadLabel_name_4.setStyleSheet("background: rgba(34, 34, 34, 0);\n"
+"font-family: \'Inter\';\n"
+"font-style: normal;\n"
+"font-weight: 200;\n"
+"font-size: 13px;\n"
+"line-height: 16px;\n"
+"\n"
+"color: #FFFFFF;\n"
+"")
+        self.LoadLabel_name_4.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.LoadLabel_name_4.setObjectName("LoadLabel_name_4")
+        self.LoadLabel_progress_4 = QtWidgets.QLabel(self.LoadLabel_2)
+        self.LoadLabel_progress_4.setGeometry(QtCore.QRect(170, 30, 141, 31))
+        self.LoadLabel_progress_4.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.LoadLabel_progress_4.setStyleSheet("background: rgba(34, 34, 34, 0);\n"
+"font-family: \'Inter\';\n"
+"font-style: normal;\n"
+"font-weight: 200;\n"
+"font-size: 13px;\n"
+"line-height: 16px;\n"
+"\n"
+"color: #FFFFFF;\n"
+"")
+        self.LoadLabel_progress_4.setAlignment(QtCore.Qt.AlignCenter)
+        self.LoadLabel_progress_4.setObjectName("LoadLabel_progress_4")
+        self.LoadLabel_close_4 = QtWidgets.QPushButton(self.LoadLabel_2)
+        self.LoadLabel_close_4.setGeometry(QtCore.QRect(280, 0, 31, 28))
+        self.LoadLabel_close_4.setStyleSheet("font-family: \'Handjet\';\n"
+"font-style: normal;\n"
+"font-weight: 400;\n"
+"font-size: 16px;\n"
+"line-height: 18px;\n"
+"/* identical to box height */\n"
+"\n"
+"letter-spacing: 0.28em;\n"
+"\n"
+"color: rgba(255, 255, 255, 0.8);\n"
+"\n"
+"background: rgba(34, 34, 34, 0);")
+        self.LoadLabel_close_4.setObjectName("LoadLabel_close_4")
+        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.DescriptionLayout.raise_()
         self.ManagePannel.raise_()
+        self.scrollArea.raise_()
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 765, 26))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 566, 26))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -215,3 +292,7 @@ class Ui_MainWindow(object):
 " from bufer"))
         self.label_3.setText(_translate("MainWindow", "Directory"))
         self.label_4.setText(_translate("MainWindow", "Setup quality"))
+        self.LoadLabel_path_4.setText(_translate("MainWindow", "File path////////////////"))
+        self.LoadLabel_name_4.setText(_translate("MainWindow", "Name////////////////"))
+        self.LoadLabel_progress_4.setText(_translate("MainWindow", ">>In profress: 99%"))
+        self.LoadLabel_close_4.setText(_translate("MainWindow", "X"))

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>765</width>
-    <height>462</height>
+    <width>566</width>
+    <height>427</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QFrame" name="BaseLayout">
     <property name="geometry">
      <rect>
-      <x>170</x>
-      <y>80</y>
+      <x>0</x>
+      <y>60</y>
       <width>551</width>
       <height>321</height>
      </rect>
@@ -222,7 +222,7 @@ background: rgba(34, 34, 34, 0);</string>
      <widget class="QPushButton" name="pushButton_9">
       <property name="geometry">
        <rect>
-        <x>54</x>
+        <x>56</x>
         <y>10</y>
         <width>31</width>
         <height>28</height>
@@ -259,6 +259,9 @@ background: rgba(34, 34, 34, 0);</string>
        <width>551</width>
        <height>241</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background: rgba(34, 34, 34, 0);</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -389,8 +392,176 @@ color: #FFFFFF;
       </property>
      </widget>
     </widget>
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="geometry">
+      <rect>
+       <x>200</x>
+       <y>90</y>
+       <width>351</width>
+       <height>181</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background: rgba(34, 34, 34, 0);
+border: 0px</string>
+     </property>
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>351</width>
+        <height>181</height>
+       </rect>
+      </property>
+      <widget class="QFrame" name="LoadLabel_2">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>10</y>
+         <width>350</width>
+         <height>71</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background: #222222;
+paffing: 10px;</string>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::StyledPanel</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Raised</enum>
+       </property>
+       <widget class="QLabel" name="LoadLabel_path_4">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>32</y>
+          <width>171</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background: rgba(34, 34, 34, 0);
+font-family: 'Inter';
+font-style: normal;
+font-weight: 200;
+font-size: 13px;
+line-height: 16px;
+
+color: #FFFFFF;
+</string>
+        </property>
+        <property name="text">
+         <string>File path////////////////</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+       <widget class="QLabel" name="LoadLabel_name_4">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>261</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background: rgba(34, 34, 34, 0);
+font-family: 'Inter';
+font-style: normal;
+font-weight: 200;
+font-size: 13px;
+line-height: 16px;
+
+color: #FFFFFF;
+</string>
+        </property>
+        <property name="text">
+         <string>Name////////////////</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+       <widget class="QLabel" name="LoadLabel_progress_4">
+        <property name="geometry">
+         <rect>
+          <x>170</x>
+          <y>30</y>
+          <width>141</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background: rgba(34, 34, 34, 0);
+font-family: 'Inter';
+font-style: normal;
+font-weight: 200;
+font-size: 13px;
+line-height: 16px;
+
+color: #FFFFFF;
+</string>
+        </property>
+        <property name="text">
+         <string>&gt;&gt;In profress: 99%</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="LoadLabel_close_4">
+        <property name="geometry">
+         <rect>
+          <x>280</x>
+          <y>0</y>
+          <width>31</width>
+          <height>28</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font-family: 'Handjet';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 18px;
+/* identical to box height */
+
+letter-spacing: 0.28em;
+
+color: rgba(255, 255, 255, 0.8);
+
+background: rgba(34, 34, 34, 0);</string>
+        </property>
+        <property name="text">
+         <string>X</string>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+    </widget>
     <zorder>DescriptionLayout</zorder>
     <zorder>ManagePannel</zorder>
+    <zorder>scrollArea</zorder>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -398,7 +569,7 @@ color: #FFFFFF;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>765</width>
+     <width>566</width>
      <height>26</height>
     </rect>
    </property>
