@@ -15,18 +15,34 @@ class DefaulButton(QtWidgets.QPushButton):
     def __init__(self, parent, text):
         super(DefaulButton, self).__init__(parent=parent)
         self.setText(text)
-        self.setStyleSheet("font-family: \'Handjet\';\n"
+        self.setStyleSheet(
+                           "QPushButton {"
+                           "font-family: \'Handjet\';\n"
                            "font-style: normal;\n"
                            "font-weight: 400;\n"
                            "font-size: 16px;\n"
                            "line-height: 18px;\n"
-                           "/* identical to box height */\n"
-                           "\n"
                            "letter-spacing: 0.28em;\n"
-                           "\n"
-                           "color: rgba(255, 255, 255, 0.8);\n"
-                           "\n"
-                           "background: rgba(34, 34, 34, 0);")
+                           "color: rgba(255, 255, 255, 0.5);\n"
+                           "background: rgba(149, 149, 149, 0.0);}\n"
+                           "QPushButton:hover {\n"
+                           "color: rgba(255, 255, 255, 0.8);}")
+
+
+class DescrLabel(QtWidgets.QLabel):
+    def __init__(self, parent, text):
+        super(DescrLabel, self).__init__(parent=parent)
+        self.setText(text)
+        self.setStyleSheet("background: #222222;\n"
+                           "font-family: \'Inter\';\n"
+                           "font-style: normal;\n"
+                           "font-weight: 200;\n"
+                           "font-size: 13px;\n"
+                           "line-height: 16px;\n"
+                           "color: #FFFFFF;\n")
+        self.setAlignment(QtCore.Qt.AlignCenter)
+# self.label.setLayoutDirection(QtCore.Qt.LeftToRight)
+# self.label.setAlignment(QtCore.Qt.AlignCenter)
 
 
 class Ui_MainWindow(object):
@@ -51,8 +67,13 @@ class Ui_MainWindow(object):
         self.downloadButton.setGeometry(QtCore.QRect(150, 10, 111, 28))
         # descr
         self.descrButton = DefaulButton(self.ManagePannel, "desccr")
-        self.pushButton_2.setGeometry(QtCore.QRect(280, 7, 71, 31))
+        self.descrButton.setGeometry(QtCore.QRect(280, 7, 71, 31))
+        # type button
+        self.typeButton = DefaulButton(self.ManagePannel, "vd")
+        self.typeButton.setGeometry(QtCore.QRect(100, 10, 31, 28))
 
+        self.tagButton = DefaulButton(self.ManagePannel, "tag")
+        self.tagButton.setGeometry(QtCore.QRect(10, 10, 31, 28))
         # decoration border
         self.border = QtWidgets.QLabel(self.ManagePannel)
         self.border.setGeometry(QtCore.QRect(270, 16, 2, 20))
@@ -74,12 +95,6 @@ class Ui_MainWindow(object):
         self.border_4.setStyleSheet("background: rgba(217, 217, 217, 0.14);")
         self.border_4.setText("")
         self.border_4.setObjectName("border_4")
-        # type button
-        self.typeButton = DefaulButton(self.ManagePannel, "vd")
-        self.pushButton_3.setGeometry(QtCore.QRect(100, 10, 31, 28))
-
-        self.tagButton = DefaulButton(self.ManagePannel, "tag")
-        self.pushButton_4.setGeometry(QtCore.QRect(10, 10, 31, 28))
         # path button
         self.pathButton = QtWidgets.QPushButton(self.ManagePannel)
         self.pathButton.setGeometry(QtCore.QRect(56, 10, 31, 28))
@@ -109,64 +124,19 @@ class Ui_MainWindow(object):
         self.DescriptionLayout.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.DescriptionLayout.setFrameShadow(QtWidgets.QFrame.Raised)
         self.DescriptionLayout.setObjectName("DescriptionLayout")
-        self.label = QtWidgets.QLabel(self.DescriptionLayout)
+        self.label = DescrLabel(self.DescriptionLayout,
+                                "Type: video/audio/playlist")
         self.label.setGeometry(QtCore.QRect(100, 70, 161, 41))
-        self.label.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.label.setStyleSheet("background: #222222;\n"
-                                 "font-family: \'Inter\';\n"
-                                 "font-style: normal;\n"
-                                 "font-weight: 200;\n"
-                                 "font-size: 13px;\n"
-                                 "line-height: 16px;\n"
-                                 "\n"
-                                 "color: #FFFFFF;\n"
-                                 "")
-        self.label.setAlignment(QtCore.Qt.AlignCenter)
-        self.label.setObjectName("label")
-        self.label_2 = QtWidgets.QLabel(self.DescriptionLayout)
+        self.label_2 = DescrLabel(
+            self.DescriptionLayout, "Autobatically copy link")
         self.label_2.setGeometry(QtCore.QRect(310, 110, 181, 41))
-        self.label_2.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.label_2.setStyleSheet("background: #222222;\n"
-                                   "font-family: \'Inter\';\n"
-                                   "font-style: normal;\n"
-                                   "font-weight: 200;\n"
-                                   "font-size: 13px;\n"
-                                   "line-height: 16px;\n"
-                                   "\n"
-                                   "color: #FFFFFF;\n"
-                                   "\n"
-                                   "padding-left: 10px;")
-        self.label_2.setAlignment(
-            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
-        self.label_2.setObjectName("label_2")
-        self.label_3 = QtWidgets.QLabel(self.DescriptionLayout)
+
+        self.label_3 = DescrLabel(self.DescriptionLayout, "Directory")
         self.label_3.setGeometry(QtCore.QRect(60, 130, 161, 31))
-        self.label_3.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.label_3.setStyleSheet("background: #222222;\n"
-                                   "font-family: \'Inter\';\n"
-                                   "font-style: normal;\n"
-                                   "font-weight: 200;\n"
-                                   "font-size: 13px;\n"
-                                   "line-height: 16px;\n"
-                                   "\n"
-                                   "color: #FFFFFF;\n"
-                                   "")
-        self.label_3.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_3.setObjectName("label_3")
-        self.label_4 = QtWidgets.QLabel(self.DescriptionLayout)
+        self.label_4 = DescrLabel(self.DescriptionLayout, "Select quality")
         self.label_4.setGeometry(QtCore.QRect(10, 200, 121, 31))
-        self.label_4.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.label_4.setStyleSheet("background: #222222;\n"
-                                   "font-family: \'Inter\';\n"
-                                   "font-style: normal;\n"
-                                   "font-weight: 200;\n"
-                                   "font-size: 13px;\n"
-                                   "line-height: 16px;\n"
-                                   "\n"
-                                   "color: #FFFFFF;\n"
-                                   "")
-        self.label_4.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_4.setObjectName("label_4")
+
+        # loaded frame
         self.scrollArea = QtWidgets.QScrollArea(self.BaseLayout)
         self.scrollArea.setGeometry(QtCore.QRect(200, 90, 351, 181))
         self.scrollArea.setStyleSheet("background: rgba(34, 34, 34, 0);\n"
@@ -256,26 +226,7 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
-
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
-
-    def retranslateUi(self, MainWindow):
-        _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.pushButton_2.setText(_translate("MainWindow", "descr"))
-        self.pushButton_3.setText(_translate("MainWindow", "Vd"))
-        self.pushButton_4.setText(_translate("MainWindow", "tag"))
-        self.label.setText(_translate(
-            "MainWindow", "Change type:playlist or video"))
-        self.label_2.setText(_translate("MainWindow", "Automaticaly copy link \n"
-                                        " from bufer"))
-        self.label_3.setText(_translate("MainWindow", "Directory"))
-        self.label_4.setText(_translate("MainWindow", "Setup quality"))
-        self.LoadLabel_path_4.setText(_translate(
-            "MainWindow", "File path////////////////"))
-        self.LoadLabel_name_4.setText(_translate(
-            "MainWindow", "Name////////////////"))
-        self.LoadLabel_progress_4.setText(
-            _translate("MainWindow", ">>In profress: 99%"))
-        self.LoadLabel_close_4.setText(_translate("MainWindow", "X"))
+        self.LoadLabel_path_4.setText("File path////////////////")
+        self.LoadLabel_name_4.setText("Name////////////////")
+        self.LoadLabel_progress_4.setText(">>In profress: 99%")
+        self.LoadLabel_close_4.setText("X")
