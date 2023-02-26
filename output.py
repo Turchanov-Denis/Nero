@@ -16,17 +16,17 @@ class DefaulButton(QtWidgets.QPushButton):
         super(DefaulButton, self).__init__(parent=parent)
         self.setText(text)
         self.setStyleSheet(
-                           "QPushButton {"
-                           "font-family: \'Handjet\';\n"
-                           "font-style: normal;\n"
-                           "font-weight: 400;\n"
-                           "font-size: 16px;\n"
-                           "line-height: 18px;\n"
-                           "letter-spacing: 0.28em;\n"
-                           "color: rgba(255, 255, 255, 0.5);\n"
-                           "background: rgba(149, 149, 149, 0.0);}\n"
-                           "QPushButton:hover {\n"
-                           "color: rgba(255, 255, 255, 0.8);}")
+            "QPushButton {"
+            "font-family: \'Handjet\';\n"
+            "font-style: normal;\n"
+            "font-weight: 400;\n"
+            "font-size: 12px;\n"
+            "line-height: 18px;\n"
+            "letter-spacing: 0.28em;\n"
+            "color: rgba(255, 255, 255, 0.5);\n"
+            "background: rgba(149, 149, 149, 0.0);}\n"
+            "QPushButton:hover {\n"
+            "color: rgba(255, 255, 255, 0.8);}")
 
 
 class DescrLabel(QtWidgets.QLabel):
@@ -45,8 +45,50 @@ class DescrLabel(QtWidgets.QLabel):
 # self.label.setAlignment(QtCore.Qt.AlignCenter)
 
 
+class DefaultMenu(DefaulButton):
+
+    def __init__(self, parent, main):
+        super(DefaultMenu, self).__init__(parent, main.bd.selectTagVideo)
+        self.main = main
+
+    def setTag(self, tag):
+        self.main.bd.setTag(tag)
+        self.setText(tag)
+
+    def enterEvent(self, event):
+        menu = QtWidgets.QMenu(self)
+        menu.setLayoutDirection(QtCore.Qt.RightToLeft)
+        menu.setStyleSheet("QMenu{font-family: \'RobotoFlex\';\n"
+                           "font-style: normal;\n"
+                           "font-weight: 200;\n"
+                           "font-size: 16px;\n"
+                           "line-height: 75.4%;\n"
+                           "/* or 14px */\n"
+                           "background: #222222;"
+                           "border: 0.5px solid rgba(167, 167, 167, 0.01);\n"
+                           "color: rgba(255, 255, 255, 0.85);}\n"
+                           """QMenu::item{
+						color: rgba(255, 255, 255, 0.85);
+						}
+						QMenu::item:selected{
+						color: rgba(255, 255, 255, 0.95);
+						} """)
+
+        if self.main.bd.selectType == "vd":
+            Rename = menu.addAction('Res="360p"')
+            Delete = menu.addAction('Res="720p"')
+            menu_sort = menu.addAction('Res="1080p"')
+            result = menu.exec_(self.mapToGlobal(QtCore.QPoint(-160, -30)))
+            if Rename == result:
+                self.setTag("360p")
+            elif Delete == result:
+                self.setTag("720p")
+            elif menu_sort == result:
+                self.setTag("1080p")
+
+
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
+    def setupUi(self, MainWindow, main):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(566, 427)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -57,47 +99,47 @@ class Ui_MainWindow(object):
         self.BaseLayout.setFrameShadow(QtWidgets.QFrame.Raised)
         self.BaseLayout.setObjectName("BaseLayout")
         self.ManagePannel = QtWidgets.QFrame(self.BaseLayout)
-        self.ManagePannel.setGeometry(QtCore.QRect(200, 270, 351, 51))
+        self.ManagePannel.setGeometry(QtCore.QRect(180, 270, 371, 51))
         self.ManagePannel.setStyleSheet("background: #222222;")
         self.ManagePannel.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.ManagePannel.setFrameShadow(QtWidgets.QFrame.Raised)
         self.ManagePannel.setObjectName("ManagePannel")
+        #! tag button
+        self.tagButton = DefaultMenu(self.ManagePannel, main)
+        self.tagButton.setGeometry(QtCore.QRect(15, 1, 41, 48))
         # download button
         self.downloadButton = DefaulButton(self.ManagePannel, "download")
-        self.downloadButton.setGeometry(QtCore.QRect(150, 10, 111, 28))
+        self.downloadButton.setGeometry(QtCore.QRect(160, 10, 111, 28))
         # descr
         self.descrButton = DefaulButton(self.ManagePannel, "desccr")
-        self.descrButton.setGeometry(QtCore.QRect(280, 7, 71, 31))
+        self.descrButton.setGeometry(QtCore.QRect(290, 7, 71, 31))
         # type button
         self.typeButton = DefaulButton(self.ManagePannel, "vd")
-        self.typeButton.setGeometry(QtCore.QRect(100, 10, 31, 28))
-
-        self.tagButton = DefaulButton(self.ManagePannel, "tag")
-        self.tagButton.setGeometry(QtCore.QRect(10, 10, 31, 28))
+        self.typeButton.setGeometry(QtCore.QRect(110, 10, 31, 28))
         # decoration border
         self.border = QtWidgets.QLabel(self.ManagePannel)
-        self.border.setGeometry(QtCore.QRect(270, 16, 2, 20))
+        self.border.setGeometry(QtCore.QRect(280, 16, 2, 20))
         self.border.setStyleSheet("background: rgba(217, 217, 217, 0.14);")
         self.border.setText("")
         self.border.setObjectName("border")
         self.border_2 = QtWidgets.QLabel(self.ManagePannel)
-        self.border_2.setGeometry(QtCore.QRect(90, 16, 2, 20))
+        self.border_2.setGeometry(QtCore.QRect(100, 16, 2, 20))
         self.border_2.setStyleSheet("background: rgba(217, 217, 217, 0.14);")
         self.border_2.setText("")
         self.border_2.setObjectName("border_2")
         self.border_3 = QtWidgets.QLabel(self.ManagePannel)
-        self.border_3.setGeometry(QtCore.QRect(140, 16, 2, 20))
+        self.border_3.setGeometry(QtCore.QRect(150, 16, 2, 20))
         self.border_3.setStyleSheet("background: rgba(217, 217, 217, 0.14);")
         self.border_3.setText("")
         self.border_3.setObjectName("border_3")
         self.border_4 = QtWidgets.QLabel(self.ManagePannel)
-        self.border_4.setGeometry(QtCore.QRect(50, 16, 2, 20))
+        self.border_4.setGeometry(QtCore.QRect(60, 16, 2, 20))
         self.border_4.setStyleSheet("background: rgba(217, 217, 217, 0.14);")
         self.border_4.setText("")
         self.border_4.setObjectName("border_4")
         # path button
         self.pathButton = QtWidgets.QPushButton(self.ManagePannel)
-        self.pathButton.setGeometry(QtCore.QRect(56, 10, 31, 28))
+        self.pathButton.setGeometry(QtCore.QRect(66, 10, 31, 28))
         self.pathButton.setStyleSheet("font-family: \'Handjet\';\n"
                                       "font-style: normal;\n"
                                       "font-weight: 400;\n"
