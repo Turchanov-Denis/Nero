@@ -11,6 +11,81 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
+class DefaultLoadedLabel(QtWidgets.QFrame):
+    def __init__(self, parent, name="Name////////////////", path="File path////////////////"):
+        super(DefaultLoadedLabel, self).__init__(parent=parent)
+        # ? arg
+        self.name = name
+        self.path = path
+        self.setMinimumSize(QtCore.QSize(0, 71))
+        self.setMaximumSize(QtCore.QSize(16777215, 71))
+        self.setStyleSheet("background: #222222;\n"
+                           "")
+        self.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.LoadLabel_path = QtWidgets.QLabel(self)
+        self.LoadLabel_path.setGeometry(QtCore.QRect(10, 32, 171, 31))
+        self.LoadLabel_path.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.LoadLabel_path.setStyleSheet("background: rgba(34, 34, 34, 0);\n"
+                                          "font-family: \'Inter\';\n"
+                                          "font-style: normal;\n"
+                                          "font-weight: 200;\n"
+                                          "font-size: 13px;\n"
+                                          "line-height: 16px;\n"
+                                          "\n"
+                                          "color: #FFFFFF;\n"
+                                          "")
+        self.LoadLabel_path.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.LoadLabel_name = QtWidgets.QLabel(self)
+        self.LoadLabel_name.setGeometry(QtCore.QRect(10, 0, 261, 31))
+        self.LoadLabel_name.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.LoadLabel_name.setStyleSheet("background: rgba(34, 34, 34, 0);\n"
+                                          "font-family: \'Inter\';\n"
+                                          "font-style: normal;\n"
+                                          "font-weight: 200;\n"
+                                          "font-size: 13px;\n"
+                                          "line-height: 16px;\n"
+                                          "\n"
+                                          "color: #FFFFFF;\n"
+                                          "")
+        self.LoadLabel_name.setAlignment(
+            QtCore.Qt.AlignLeading | QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.LoadLabel_name.setObjectName("LoadLabel_name")
+        self.LoadLabel_progress = QtWidgets.QLabel(self)
+        self.LoadLabel_progress.setGeometry(QtCore.QRect(170, 30, 141, 31))
+        self.LoadLabel_progress.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.LoadLabel_progress.setStyleSheet("background: rgba(34, 34, 34, 0);\n"
+                                              "font-family: \'Inter\';\n"
+                                              "font-style: normal;\n"
+                                              "font-weight: 200;\n"
+                                              "font-size: 13px;\n"
+                                              "line-height: 16px;\n"
+                                              "\n"
+                                              "color: #FFFFFF;\n"
+                                              "")
+        self.LoadLabel_progress.setAlignment(QtCore.Qt.AlignCenter)
+        self.LoadLabel_progress.setObjectName("LoadLabel_progress")
+        self.LoadLabel_close = QtWidgets.QPushButton(self)
+        self.LoadLabel_close.setGeometry(QtCore.QRect(340, 0, 31, 28))
+        self.LoadLabel_close.setStyleSheet("font-family: \'Handjet\';\n"
+                                           "font-style: normal;\n"
+                                           "font-weight: 400;\n"
+                                           "font-size: 16px;\n"
+                                           "line-height: 18px;\n"
+                                           "/* identical to box height */\n"
+                                           "\n"
+                                           "letter-spacing: 0.28em;\n"
+                                           "\n"
+                                           "color: rgba(255, 255, 255, 0.8);\n"
+                                           "\n"
+                                           "background: rgba(34, 34, 34, 0);")
+        self.LoadLabel_path.setText(self.path)
+        self.LoadLabel_name.setText(self.name)
+        self.LoadLabel_progress.setText(">>In profress: 99%")
+        self.LoadLabel_close.setText("X")
+
+
 class DefaultButton(QtWidgets.QPushButton):
     def __init__(self, parent, text=""):
         super(DefaultButton, self).__init__(parent=parent)
@@ -145,7 +220,7 @@ class Ui_MainWindow(object):
         # type button
         self.typeButton = DefaultButton(self.ManagePannel, main.bd.selectType)
         self.typeButton.setGeometry(QtCore.QRect(110, 10, 31, 28))
-         # path button
+        # path button
         self.pathButton = DefaulIconButton(self.ManagePannel)
         self.pathButton.setGeometry(QtCore.QRect(66, 12, 31, 28))
         icon = QtGui.QIcon()
@@ -197,162 +272,41 @@ class Ui_MainWindow(object):
         #!  loaded frame
         self.scrollArea = QtWidgets.QScrollArea(self.BaseLayout)
         self.scrollArea.setGeometry(QtCore.QRect(180, 100, 371, 161))
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.scrollArea.sizePolicy().hasHeightForWidth())
+        sizePolicy.setHeightForWidth(
+            self.scrollArea.sizePolicy().hasHeightForWidth())
         self.scrollArea.setSizePolicy(sizePolicy)
         self.scrollArea.setMinimumSize(QtCore.QSize(0, 142))
         self.scrollArea.setStyleSheet("background: rgba(34, 34, 34, 0);\n"
-"border: 0px")
+                                      "border: 0px")
         self.scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
-        self.scrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
-        self.scrollArea.setSizeAdjustPolicy(QtWidgets.QAbstractScrollArea.AdjustIgnored)
+        self.scrollArea.setHorizontalScrollBarPolicy(
+            QtCore.Qt.ScrollBarAlwaysOff)
+        self.scrollArea.setSizeAdjustPolicy(
+            QtWidgets.QAbstractScrollArea.AdjustIgnored)
         self.scrollArea.setWidgetResizable(True)
-        self.scrollArea.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignJustify)
+        self.scrollArea.setAlignment(
+            QtCore.Qt.AlignBottom | QtCore.Qt.AlignJustify)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
         self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 351, 161))
         self.scrollAreaWidgetContents.setMinimumSize(QtCore.QSize(0, 151))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
-        self.verticalLayout.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
+        self.verticalLayout = QtWidgets.QVBoxLayout(
+            self.scrollAreaWidgetContents)
+        self.verticalLayout.setSizeConstraint(
+            QtWidgets.QLayout.SetDefaultConstraint)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
-        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem = QtWidgets.QSpacerItem(
+            20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem)
-        self.LoadLabel_4 = QtWidgets.QFrame(self.scrollAreaWidgetContents)
-        self.LoadLabel_4.setMinimumSize(QtCore.QSize(0, 71))
-        self.LoadLabel_4.setMaximumSize(QtCore.QSize(16777215, 71))
-        self.LoadLabel_4.setStyleSheet("background: #222222;\n"
-"")
-        self.LoadLabel_4.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.LoadLabel_4.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.LoadLabel_4.setObjectName("LoadLabel_4")
-        self.LoadLabel_path_8 = QtWidgets.QLabel(self.LoadLabel_4)
-        self.LoadLabel_path_8.setGeometry(QtCore.QRect(10, 32, 171, 31))
-        self.LoadLabel_path_8.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.LoadLabel_path_8.setStyleSheet("background: rgba(34, 34, 34, 0);\n"
-"font-family: \'Inter\';\n"
-"font-style: normal;\n"
-"font-weight: 200;\n"
-"font-size: 13px;\n"
-"line-height: 16px;\n"
-"\n"
-"color: #FFFFFF;\n"
-"")
-        self.LoadLabel_path_8.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        self.LoadLabel_path_8.setObjectName("LoadLabel_path_8")
-        self.LoadLabel_name_8 = QtWidgets.QLabel(self.LoadLabel_4)
-        self.LoadLabel_name_8.setGeometry(QtCore.QRect(10, 0, 261, 31))
-        self.LoadLabel_name_8.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.LoadLabel_name_8.setStyleSheet("background: rgba(34, 34, 34, 0);\n"
-"font-family: \'Inter\';\n"
-"font-style: normal;\n"
-"font-weight: 200;\n"
-"font-size: 13px;\n"
-"line-height: 16px;\n"
-"\n"
-"color: #FFFFFF;\n"
-"")
-        self.LoadLabel_name_8.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        self.LoadLabel_name_8.setObjectName("LoadLabel_name_8")
-        self.LoadLabel_progress_8 = QtWidgets.QLabel(self.LoadLabel_4)
-        self.LoadLabel_progress_8.setGeometry(QtCore.QRect(170, 30, 141, 31))
-        self.LoadLabel_progress_8.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.LoadLabel_progress_8.setStyleSheet("background: rgba(34, 34, 34, 0);\n"
-"font-family: \'Inter\';\n"
-"font-style: normal;\n"
-"font-weight: 200;\n"
-"font-size: 13px;\n"
-"line-height: 16px;\n"
-"\n"
-"color: #FFFFFF;\n"
-"")
-        self.LoadLabel_progress_8.setAlignment(QtCore.Qt.AlignCenter)
-        self.LoadLabel_progress_8.setObjectName("LoadLabel_progress_8")
-        self.LoadLabel_close_8 = QtWidgets.QPushButton(self.LoadLabel_4)
-        self.LoadLabel_close_8.setGeometry(QtCore.QRect(320, 0, 31, 28))
-        self.LoadLabel_close_8.setStyleSheet("font-family: \'Handjet\';\n"
-"font-style: normal;\n"
-"font-weight: 400;\n"
-"font-size: 16px;\n"
-"line-height: 18px;\n"
-"/* identical to box height */\n"
-"\n"
-"letter-spacing: 0.28em;\n"
-"\n"
-"color: rgba(255, 255, 255, 0.8);\n"
-"\n"
-"background: rgba(34, 34, 34, 0);")
-        self.LoadLabel_close_8.setObjectName("LoadLabel_close_8")
-        self.LoadLabel_5 = QtWidgets.QFrame(self.LoadLabel_4)
-        self.LoadLabel_5.setGeometry(QtCore.QRect(180, 30, 308, 71))
-        self.LoadLabel_5.setMinimumSize(QtCore.QSize(0, 71))
-        self.LoadLabel_5.setMaximumSize(QtCore.QSize(16777215, 71))
-        self.LoadLabel_5.setStyleSheet("background: #222222;\n"
-"paffing: 10px;")
-        self.LoadLabel_5.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.LoadLabel_5.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.LoadLabel_5.setObjectName("LoadLabel_5")
-        self.LoadLabel_path_9 = QtWidgets.QLabel(self.LoadLabel_5)
-        self.LoadLabel_path_9.setGeometry(QtCore.QRect(0, 32, 171, 31))
-        self.LoadLabel_path_9.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.LoadLabel_path_9.setStyleSheet("background: rgba(34, 34, 34, 0);\n"
-"font-family: \'Inter\';\n"
-"font-style: normal;\n"
-"font-weight: 200;\n"
-"font-size: 13px;\n"
-"line-height: 16px;\n"
-"\n"
-"color: #FFFFFF;\n"
-"")
-        self.LoadLabel_path_9.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        self.LoadLabel_path_9.setObjectName("LoadLabel_path_9")
-        self.LoadLabel_name_9 = QtWidgets.QLabel(self.LoadLabel_5)
-        self.LoadLabel_name_9.setGeometry(QtCore.QRect(40, 0, 261, 31))
-        self.LoadLabel_name_9.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.LoadLabel_name_9.setStyleSheet("background: rgba(34, 34, 34, 0);\n"
-"font-family: \'Inter\';\n"
-"font-style: normal;\n"
-"font-weight: 200;\n"
-"font-size: 13px;\n"
-"line-height: 16px;\n"
-"\n"
-"color: #FFFFFF;\n"
-"")
-        self.LoadLabel_name_9.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
-        self.LoadLabel_name_9.setObjectName("LoadLabel_name_9")
-        self.LoadLabel_progress_9 = QtWidgets.QLabel(self.LoadLabel_5)
-        self.LoadLabel_progress_9.setGeometry(QtCore.QRect(170, 30, 141, 31))
-        self.LoadLabel_progress_9.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.LoadLabel_progress_9.setStyleSheet("background: rgba(34, 34, 34, 0);\n"
-"font-family: \'Inter\';\n"
-"font-style: normal;\n"
-"font-weight: 200;\n"
-"font-size: 13px;\n"
-"line-height: 16px;\n"
-"\n"
-"color: #FFFFFF;\n"
-"")
-        self.LoadLabel_progress_9.setAlignment(QtCore.Qt.AlignCenter)
-        self.LoadLabel_progress_9.setObjectName("LoadLabel_progress_9")
-        self.LoadLabel_close_9 = QtWidgets.QPushButton(self.LoadLabel_5)
-        self.LoadLabel_close_9.setGeometry(QtCore.QRect(280, 0, 31, 28))
-        self.LoadLabel_close_9.setStyleSheet("font-family: \'Handjet\';\n"
-"font-style: normal;\n"
-"font-weight: 400;\n"
-"font-size: 16px;\n"
-"line-height: 18px;\n"
-"/* identical to box height */\n"
-"\n"
-"letter-spacing: 0.28em;\n"
-"\n"
-"color: rgba(255, 255, 255, 0.8);\n"
-"\n"
-"background: rgba(34, 34, 34, 0);")
-        self.LoadLabel_close_9.setObjectName("LoadLabel_close_9")
-        self.verticalLayout.addWidget(self.LoadLabel_4)
+        # *loaded label
+        self.loadedLabel = DefaultLoadedLabel(self.scrollAreaWidgetContents)
+        self.verticalLayout.addWidget(self.loadedLabel)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.DescriptionLayout.raise_()
         self.ManagePannel.raise_()
@@ -365,12 +319,3 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
-        self.LoadLabel_path_8.setText("File path////////////////")
-        self.LoadLabel_name_8.setText("Name////////////////")
-        self.LoadLabel_progress_8.setText(">>In profress: 99%")
-        self.LoadLabel_close_8.setText("X")
-        self.LoadLabel_path_9.setText("File path////////////////")
-        self.LoadLabel_name_9.setText("Name////////////////")
-        self.LoadLabel_progress_9.setText(">>In profress: 99%")
-        self.LoadLabel_close_9.setText("X")
-       
