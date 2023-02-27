@@ -12,7 +12,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class DefaulButton(QtWidgets.QPushButton):
-    def __init__(self, parent, text):
+    def __init__(self, parent, text=""):
         super(DefaulButton, self).__init__(parent=parent)
         self.setText(text)
         self.setStyleSheet(
@@ -30,7 +30,7 @@ class DefaulButton(QtWidgets.QPushButton):
 
 
 class DescrLabel(QtWidgets.QLabel):
-    def __init__(self, parent, text):
+    def __init__(self, parent, text: str):
         super(DescrLabel, self).__init__(parent=parent)
         self.setText(text)
         self.setStyleSheet("background: #222222;\n"
@@ -48,13 +48,20 @@ class DescrLabel(QtWidgets.QLabel):
 class DefaultMenu(DefaulButton):
 
     def __init__(self, parent, main):
-        super(DefaultMenu, self).__init__(parent, main.bd.selectTagVideo)
+        super(DefaultMenu, self).__init__(parent)
         self.main = main
-
+        self.dictionary = { "vd": ["360p","720p", "1080p"] }
+        self.defineTag()
     def setTag(self, tag):
         self.main.bd.setTag(tag)
         self.setText(tag)
 
+    def defineTag(self):
+        if self.main.bd.selectType in self.dictionary.keys():
+            self.setText(self.dictionary["vd"][0])
+        else:       
+            self.setText("")
+            
     def enterEvent(self, event):
         menu = QtWidgets.QMenu(self)
         menu.setLayoutDirection(QtCore.Qt.RightToLeft)
@@ -114,7 +121,7 @@ class Ui_MainWindow(object):
         self.descrButton = DefaulButton(self.ManagePannel, "desccr")
         self.descrButton.setGeometry(QtCore.QRect(290, 7, 71, 31))
         # type button
-        self.typeButton = DefaulButton(self.ManagePannel, "vd")
+        self.typeButton = DefaulButton(self.ManagePannel, main.bd.selectType)
         self.typeButton.setGeometry(QtCore.QRect(110, 10, 31, 28))
         # decoration border
         self.border = QtWidgets.QLabel(self.ManagePannel)
@@ -192,8 +199,7 @@ class Ui_MainWindow(object):
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.LoadLabel_2 = QtWidgets.QFrame(self.scrollAreaWidgetContents)
         self.LoadLabel_2.setGeometry(QtCore.QRect(0, 10, 350, 71))
-        self.LoadLabel_2.setStyleSheet("background: #222222;\n"
-                                       "paffing: 10px;")
+        self.LoadLabel_2.setStyleSheet("background: #222222;\n")
         self.LoadLabel_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.LoadLabel_2.setFrameShadow(QtWidgets.QFrame.Raised)
         self.LoadLabel_2.setObjectName("LoadLabel_2")
