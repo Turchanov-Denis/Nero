@@ -43,7 +43,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setupUi(self, self)
         # warehouse
         self.DescriptionLayout.hide()
-        self.scrollArea.hide()
+        #! self.scrollArea.hide()
         self.descrButton.clicked.connect(lambda: self.DescriptionLayout.show(
         ) if self.DescriptionLayout.isHidden() else self.DescriptionLayout.hide())
         self.typeButton.clicked.connect(
