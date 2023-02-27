@@ -1,6 +1,7 @@
 import sys
 from PyQt5 import QtWidgets, uic
 from output import Ui_MainWindow
+import pathlib
 
 
 class Warehouse:
@@ -8,6 +9,8 @@ class Warehouse:
         self.selectType = typeI[0]
         self.type = typeI
         self.selectTagVideo = selectTagVideo
+        self.path = pathlib.Path.home().joinpath("Desktop")
+        # print(self.path)
 
     def setTag(self, tag):
         self.selectTagVideo = tag
@@ -19,7 +22,14 @@ class Warehouse:
         print(self.selectType)
         component1.setText(self.selectType)
         component2.defineTag()
-        
+
+    
+    def setPath(self,component):
+        folderpath = QtWidgets.QFileDialog.getExistingDirectory(
+            component, 'Select Folder')
+        self.path = pathlib.Path(folderpath)
+    
+        print(self.path)
 
     @staticmethod
     def shift(a):
@@ -37,7 +47,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.descrButton.clicked.connect(lambda: self.DescriptionLayout.show(
         ) if self.DescriptionLayout.isHidden() else self.DescriptionLayout.hide())
         self.typeButton.clicked.connect(
-            lambda: self.bd.setType(self.typeButton,self.tagButton))
+            lambda: self.bd.setType(self.typeButton, self.tagButton))
+        self.pathButton.clicked.connect(lambda: self.bd.setPath(self))
 
 
 app = QtWidgets.QApplication(sys.argv)

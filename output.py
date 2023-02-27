@@ -11,9 +11,9 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class DefaulButton(QtWidgets.QPushButton):
+class DefaultButton(QtWidgets.QPushButton):
     def __init__(self, parent, text=""):
-        super(DefaulButton, self).__init__(parent=parent)
+        super(DefaultButton, self).__init__(parent=parent)
         self.setText(text)
         self.setStyleSheet(
             "QPushButton {"
@@ -27,6 +27,27 @@ class DefaulButton(QtWidgets.QPushButton):
             "background: rgba(149, 149, 149, 0.0);}\n"
             "QPushButton:hover {\n"
             "color: rgba(255, 255, 255, 0.8);}")
+
+
+class DefaulIconButton(QtWidgets.QPushButton):
+    def __init__(self, parent, text=""):
+        super(DefaulIconButton, self).__init__(parent=parent)
+        self.setText(text)
+        self.setStyleSheet(
+            "QPushButton {"
+            "font-family: \'Handjet\';\n"
+            "font-style: normal;\n"
+            "font-weight: 400;\n"
+            "font-size: 12px;\n"
+            "line-height: 18px;\n"
+            "letter-spacing: 0.28em;\n"
+
+            "color: rgba(255, 255, 255, 0.5);\n"
+            "background: rgba(149, 149, 149, 0.0);}\n"
+            "QPushButton:hover {\n"
+            "color: rgba(255, 255, 255, 0.8);"
+            "background: rgba(255, 255, 255, 0.1);}\n"
+        )
 
 
 class DescrLabel(QtWidgets.QLabel):
@@ -45,13 +66,14 @@ class DescrLabel(QtWidgets.QLabel):
 # self.label.setAlignment(QtCore.Qt.AlignCenter)
 
 
-class DefaultMenu(DefaulButton):
+class DefaultMenu(DefaultButton):
 
     def __init__(self, parent, main):
         super(DefaultMenu, self).__init__(parent)
         self.main = main
-        self.dictionary = { "vd": ["360p","720p", "1080p"] }
+        self.dictionary = {"vd": ["360p", "720p", "1080p"]}
         self.defineTag()
+
     def setTag(self, tag):
         self.main.bd.setTag(tag)
         self.setText(tag)
@@ -59,9 +81,9 @@ class DefaultMenu(DefaulButton):
     def defineTag(self):
         if self.main.bd.selectType in self.dictionary.keys():
             self.setText(self.dictionary["vd"][0])
-        else:       
+        else:
             self.setText("")
-            
+
     def enterEvent(self, event):
         menu = QtWidgets.QMenu(self)
         menu.setLayoutDirection(QtCore.Qt.RightToLeft)
@@ -115,14 +137,22 @@ class Ui_MainWindow(object):
         self.tagButton = DefaultMenu(self.ManagePannel, main)
         self.tagButton.setGeometry(QtCore.QRect(15, 1, 41, 48))
         # download button
-        self.downloadButton = DefaulButton(self.ManagePannel, "download")
+        self.downloadButton = DefaultButton(self.ManagePannel, "download")
         self.downloadButton.setGeometry(QtCore.QRect(160, 10, 111, 28))
         # descr
-        self.descrButton = DefaulButton(self.ManagePannel, "desccr")
+        self.descrButton = DefaultButton(self.ManagePannel, "desccr")
         self.descrButton.setGeometry(QtCore.QRect(290, 7, 71, 31))
         # type button
-        self.typeButton = DefaulButton(self.ManagePannel, main.bd.selectType)
+        self.typeButton = DefaultButton(self.ManagePannel, main.bd.selectType)
         self.typeButton.setGeometry(QtCore.QRect(110, 10, 31, 28))
+         # path button
+        self.pathButton = DefaulIconButton(self.ManagePannel)
+        self.pathButton.setGeometry(QtCore.QRect(66, 12, 31, 28))
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap(
+            "C:\\Users\\turch\\Desktop\\PyProject\\Nero\\srcUI\\../resource/icon/file.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pathButton.setIcon(icon)
+        self.pathButton.setObjectName("pathButton")
         # decoration border
         self.border = QtWidgets.QLabel(self.ManagePannel)
         self.border.setGeometry(QtCore.QRect(280, 16, 2, 20))
@@ -144,27 +174,6 @@ class Ui_MainWindow(object):
         self.border_4.setStyleSheet("background: rgba(217, 217, 217, 0.14);")
         self.border_4.setText("")
         self.border_4.setObjectName("border_4")
-        # path button
-        self.pathButton = QtWidgets.QPushButton(self.ManagePannel)
-        self.pathButton.setGeometry(QtCore.QRect(66, 10, 31, 28))
-        self.pathButton.setStyleSheet("font-family: \'Handjet\';\n"
-                                      "font-style: normal;\n"
-                                      "font-weight: 400;\n"
-                                      "font-size: 16px;\n"
-                                      "line-height: 18px;\n"
-                                      "/* identical to box height */\n"
-                                      "\n"
-                                      "letter-spacing: 0.28em;\n"
-                                      "\n"
-                                      "color: rgba(255, 255, 255, 0.8);\n"
-                                      "\n"
-                                      "background: rgba(34, 34, 34, 0);")
-        self.pathButton.setText("")
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(
-            "C:\\Users\\turch\\Desktop\\PyProject\\Nero\\srcUI\\../resource/icon/file.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pathButton.setIcon(icon)
-        self.pathButton.setObjectName("pathButton")
         # descr
         self.DescriptionLayout = QtWidgets.QFrame(self.BaseLayout)
         self.DescriptionLayout.setGeometry(QtCore.QRect(0, 80, 551, 241))
