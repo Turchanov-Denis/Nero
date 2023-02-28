@@ -12,11 +12,11 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class DefaultLoadedLabel(QtWidgets.QFrame):
-    def __init__(self, parent, name="Name////////////////", path="File path////////////////"):
-        super(DefaultLoadedLabel, self).__init__(parent=parent)
+    def __init__(self, name: str ="Name////////////////", path: str="File path////////////////"):
+        super(DefaultLoadedLabel, self).__init__()
         # ? arg
-        self.name = name
-        self.path = path
+        self.name: str = name
+        self.path: str = path
         self.setMinimumSize(QtCore.QSize(0, 71))
         self.setMaximumSize(QtCore.QSize(16777215, 71))
         self.setStyleSheet("background: #222222;\n"
@@ -88,7 +88,7 @@ class DefaultLoadedLabel(QtWidgets.QFrame):
 
 
 class DefaultButton(QtWidgets.QPushButton):
-    def __init__(self, parent, text=""):
+    def __init__(self, parent, text: str=""):
         super(DefaultButton, self).__init__(parent=parent)
         self.setText(text)
         self.setStyleSheet(
@@ -106,7 +106,7 @@ class DefaultButton(QtWidgets.QPushButton):
 
 
 class DefaulIconButton(QtWidgets.QPushButton):
-    def __init__(self, parent, text=""):
+    def __init__(self, parent, text: str=""):
         super(DefaulIconButton, self).__init__(parent=parent)
         self.setText(text)
         self.setStyleSheet(
@@ -151,7 +151,7 @@ class DefaultMenu(DefaultButton):
                                   "1080p"], "au": ['128kb']}
         self.defineTag()
 
-    def setTag(self, tag):
+    def setTag(self, tag: str):
         self.main.bd.setTag(tag)
         self.setText(tag)
 
@@ -314,9 +314,6 @@ class Ui_MainWindow(object):
         spacerItem = QtWidgets.QSpacerItem(
             20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem)
-        # *loaded label
-        self.loadedLabel = DefaultLoadedLabel(self.scrollAreaWidgetContents)
-        self.verticalLayout.addWidget(self.loadedLabel)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.DescriptionLayout.raise_()
         self.ManagePannel.raise_()

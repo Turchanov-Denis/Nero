@@ -1,4 +1,4 @@
-from pytube import YouTube, Playlist
+from pytube import YouTube, Playlist, exceptions
 import sys
 import pathlib
 sys.path.append(str(pathlib.Path().resolve()))
@@ -31,5 +31,11 @@ class YtManager:
 
 
 if __name__ == "__main__":
-    from app import Warehouse
-    yt = YtManager(Warehouse())
+    # from app import Warehouse
+    # yt = YtManager(Warehouse())
+    try:
+        yt = YouTube("https://www.youtube.com/watch?v=eg65SbqmT0s&ab_channel=Sou")
+        stream = yt.streams.get_by_itag(140)
+        stream.download()
+    except :
+        print("h---")
