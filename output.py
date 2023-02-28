@@ -84,6 +84,7 @@ class DefaultLoadedLabel(QtWidgets.QFrame):
         self.LoadLabel_name.setText(self.name)
         self.LoadLabel_progress.setText(">>In profress: 99%")
         self.LoadLabel_close.setText("X")
+        self.LoadLabel_close.clicked.connect(lambda: self.deleteLater())
 
 
 class DefaultButton(QtWidgets.QPushButton):

@@ -5,6 +5,7 @@ import pathlib
 
 
 class Warehouse:
+    # *keeping and managing
     def __init__(self, typeI=["vd", "au", "pl"], selectTagVideo="360p"):
         self.selectType = typeI[0]
         self.type = typeI
