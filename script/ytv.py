@@ -19,7 +19,7 @@ class YtManager:
             stream = yt.streams.get_by_itag(self.bd.pytubeTag)
             stream.download()
         except:
-            raise "dowloadVAError"
+            pass
 
     def dowloadPl(self):
         try:
@@ -27,7 +27,7 @@ class YtManager:
             for video in p.videos:
                 video.streams.get_by_itag(self.bd.pytubeTag).download()
         except:
-            raise "dowloadPlError"
+            pass
 
 
 if __name__ == "__main__":
