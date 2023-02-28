@@ -2,11 +2,35 @@ import sys
 from PyQt5 import QtWidgets, uic
 from output import Ui_MainWindow
 import pathlib
+from pytube import YouTube, Playlist
+import clipboard
+
+
+class YtManager:
+    @staticmethod
+    def dowloadVA(link, pytubeTag, path):
+        print(link, pytubeTag)
+        try:
+            yt = YouTube(link)
+            stream = yt.streams.get_by_itag(pytubeTag)
+            stream.download(output_path = path)
+            return yt.title
+        except:
+            raise "dowloadVAError"
+
+    @staticmethod
+    def dowloadPl(link, pytubeTag):
+        try:
+            p = Playlist(link)
+            for video in p.videos:
+                video.streams.get_by_itag(pytubeTag).download()
+        except:
+            raise "dowloadPlError"
 
 
 class Warehouse:
     # *keeping and managing
-    def __init__(self, typeI=["vd", "au", "pl"], selectTagVideo="360p", pytubeTag = 18):
+    def __init__(self, typeI=["vd", "au", "pl"], selectTagVideo="360p", pytubeTag=18):
         self.selectType = typeI[0]
         self.type = typeI
         self.selectTagVideo = selectTagVideo
@@ -14,6 +38,8 @@ class Warehouse:
         self.link = ""
         self.decodeTag = {"360p": 18, "720p": 22}
         self.pytubeTag = pytubeTag
+        # *YtManager
+        self.yt = YtManager()
 
     def setTag(self, tag):
         self.selectTagVideo = tag
@@ -34,6 +60,10 @@ class Warehouse:
 
         print(self.path)
 
+    def download(self, link):
+        self.link = link
+        title = self.yt.dowloadVA(self.link, self.pytubeTag,self.path)
+        print(title)
     @staticmethod
     def shift(a):
         a.append(a.pop(0))
@@ -52,6 +82,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.typeButton.clicked.connect(
             lambda: self.bd.setType(self.typeButton, self.tagButton))
         self.pathButton.clicked.connect(lambda: self.bd.setPath(self))
+        self.downloadButton.clicked.connect(
+            lambda: self.bd.download(clipboard.paste()))
 
 
 if __name__ == "__main__":
