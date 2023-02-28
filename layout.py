@@ -9,10 +9,10 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+import os
 
 class DefaultLoadedLabel(QtWidgets.QFrame):
-    def __init__(self, name: str ="Name////////////////", path: str="File path////////////////"):
+    def __init__(self, name: str = "Name////////////////", path: str = ""):
         super(DefaultLoadedLabel, self).__init__()
         # ? arg
         self.name: str = name
@@ -82,13 +82,17 @@ class DefaultLoadedLabel(QtWidgets.QFrame):
                                            "background: rgba(34, 34, 34, 0);")
         self.LoadLabel_path.setText(self.path)
         self.LoadLabel_name.setText(self.name)
-        self.LoadLabel_progress.setText(">>In profress: 99%")
+        self.LoadLabel_progress.setText(">>Profress: 100%")
         self.LoadLabel_close.setText("X")
         self.LoadLabel_close.clicked.connect(lambda: self.deleteLater())
 
+    def mousePressEvent(self, event):
+        if (self.path):
+            os.startfile(self.path)
+
 
 class DefaultButton(QtWidgets.QPushButton):
-    def __init__(self, parent, text: str=""):
+    def __init__(self, parent, text: str = ""):
         super(DefaultButton, self).__init__(parent=parent)
         self.setText(text)
         self.setStyleSheet(
@@ -106,7 +110,7 @@ class DefaultButton(QtWidgets.QPushButton):
 
 
 class DefaulIconButton(QtWidgets.QPushButton):
-    def __init__(self, parent, text: str=""):
+    def __init__(self, parent, text: str = ""):
         super(DefaulIconButton, self).__init__(parent=parent)
         self.setText(text)
         self.setStyleSheet(
@@ -192,7 +196,7 @@ class DefaultMenu(DefaultButton):
             elif Res3 == result:
                 self.setTag("1080p")
             self.defineTag()
-            
+
         if self.main.bd.selectType == "au":
             Res1 = menu.addAction('audio/mp4 | 128kbps')
             result = menu.exec_(self.mapToGlobal(QtCore.QPoint(-160, -30)))

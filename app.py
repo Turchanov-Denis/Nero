@@ -8,6 +8,7 @@ from pytube import YouTube, Playlist, exceptions
 import clipboard
 import traceback
 
+
 class WorkerSignals(QObject):
     '''
     Defines the signals available from a running worker thread.
@@ -57,7 +58,6 @@ class Worker(QRunnable):
         self.signals = WorkerSignals()
 
         # Add the callback to our kwargs
-        self.kwargs['progress_callback'] = self.signals.progress
 
     @pyqtSlot()
     def run(self):
@@ -67,7 +67,8 @@ class Worker(QRunnable):
 
         # Retrieve args/kwargs here; and fire processing using them
         try:
-            result = self.fn(*self.args, **self.kwargs)
+            print(*self.args)
+            result = self.fn(*self.args)
         except:
             traceback.print_exc()
             exctype, value = sys.exc_info()[:2]
@@ -82,7 +83,7 @@ class Worker(QRunnable):
 class YtManager():
     @staticmethod
     def dowloadVA(link: str, pytubeTag: int, path: str):
-        print(link, pytubeTag)
+        print("awd", link, pytubeTag, path)
         try:
             yt = YouTube(link)
             stream = yt.streams.get_by_itag(pytubeTag)
@@ -105,7 +106,7 @@ class YtManager():
 
 class Warehouse:
     # *keeping and managing
-    def __init__(self, typeI: list[str] = ["vd", "au", "pl"], selectTagVideo: str = "360p", pytubeTag: int = 18):
+    def __init__(self, mainComponent: QtWidgets.QMainWindow, typeI: list[str] = ["vd", "au", "pl"], selectTagVideo: str = "360p", pytubeTag: int = 18):
         self.selectType = typeI[0]
         self.type: list[str] = typeI
         self.selectTagVideo: str = selectTagVideo
@@ -115,6 +116,8 @@ class Warehouse:
         self.pytubeTag: int = pytubeTag
         # *YtManager
         self.yt = YtManager()
+        self.threadpool = QThreadPool()
+        self.mainComponent = mainComponent
 
     def setTag(self, tag):
         self.selectTagVideo = tag
@@ -141,18 +144,44 @@ class Warehouse:
     def download(self, component: QtWidgets.QMainWindow, link: str):
         self.link = link
         if link:
-            self.worker_thread = QtCore.QThread()
-            title = self.yt.dowloadVA(self.link, self.pytubeTag, self.path)
-            if title == "LinkError":
-                print("LinkError")
-            elif title == "PrivateError":
-                print("PrivateError")
-            else:
-                print("something is wrong")
-                return
-            # *loaded label
+            # Any other args, kwargs are passed to the run function
+            self.mainComponent.downloadButton.setEnabled(False)
+            worker = Worker(self.yt.dowloadVA, self.link,
+                            self.pytubeTag, self.path)
+            worker.signals.result.connect(self.addLabel)
+            worker.signals.finished.connect(self.thread_complete)
+            # worker.signals.progress.connect(self.progress_fn)
+            self.threadpool.start(worker)
+            # title = self.yt.dowloadVA(self.link, self.pytubeTag, self.path)
+
+    def thread_complete(self):
+        self.mainComponent.downloadButton.setEnabled(True)
+        print("THREAD COMPLETE!")
+
+    def addLabel(self, title):
+        print(title)
+        if title == "LinkError":
+            print("LinkError")
+            self.showDialog("LinkError")
+        elif title == "PrivateError":
+            print("PrivateError")
+        elif title == "otherError":
+            return
+        else:
+            print("something is wrong")
             loadedLabel = DefaultLoadedLabel(title, self.path)
-            component.verticalLayout.addWidget(loadedLabel)
+            self.mainComponent.verticalLayout.addWidget(loadedLabel)
+            # *loaded label
+
+    @staticmethod
+    def showDialog(text: str):
+        msgBox = QtWidgets.QMessageBox()
+        msgBox.setIcon(QtWidgets.QMessageBox.Information)
+        msgBox.setText(text)
+        msgBox.setWindowTitle("Event")
+        msgBox.setStandardButtons(
+            QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
+        returnValue = msgBox.exec()
 
     @staticmethod
     def shift(a: list):
@@ -163,7 +192,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self, *args, obj=None, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
         # warehouse declaration
-        self.bd = Warehouse()
+        self.bd = Warehouse(self)
         self.setupUi(self, self)
         self.DescriptionLayout.hide()
         # ? self.scrollArea.hide()
@@ -174,6 +203,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.pathButton.clicked.connect(lambda: self.bd.setPath(self))
         self.downloadButton.clicked.connect(
             lambda: self.bd.download(self, clipboard.paste()))
+
+        self.bd.addLabel("awd")
 
 
 if __name__ == "__main__":
