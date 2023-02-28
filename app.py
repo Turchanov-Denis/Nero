@@ -11,7 +11,6 @@ class Warehouse:
         self.type = typeI
         self.selectTagVideo = selectTagVideo
         self.path = pathlib.Path.home().joinpath("Desktop")
-        # print(self.path)
 
     def setTag(self, tag):
         self.selectTagVideo = tag
@@ -24,12 +23,11 @@ class Warehouse:
         component1.setText(self.selectType)
         component2.defineTag()
 
-    
-    def setPath(self,component):
+    def setPath(self, component):
         folderpath = QtWidgets.QFileDialog.getExistingDirectory(
             component, 'Select Folder')
         self.path = pathlib.Path(folderpath)
-    
+
         print(self.path)
 
     @staticmethod
@@ -40,11 +38,11 @@ class Warehouse:
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self, *args, obj=None, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
+        # warehouse declaration
         self.bd = Warehouse()
         self.setupUi(self, self)
-        # warehouse
         self.DescriptionLayout.hide()
-        #! self.scrollArea.hide()
+        #? self.scrollArea.hide()
         self.descrButton.clicked.connect(lambda: self.DescriptionLayout.show(
         ) if self.DescriptionLayout.isHidden() else self.DescriptionLayout.hide())
         self.typeButton.clicked.connect(
