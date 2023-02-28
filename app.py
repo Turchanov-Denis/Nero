@@ -6,14 +6,18 @@ import pathlib
 
 class Warehouse:
     # *keeping and managing
-    def __init__(self, typeI=["vd", "au", "pl"], selectTagVideo="360p"):
+    def __init__(self, typeI=["vd", "au", "pl"], selectTagVideo="360p", pytubeTag = 18):
         self.selectType = typeI[0]
         self.type = typeI
         self.selectTagVideo = selectTagVideo
         self.path = pathlib.Path.home().joinpath("Desktop")
+        self.link = ""
+        self.decodeTag = {"360p": 18, "720p": 22}
+        self.pytubeTag = pytubeTag
 
     def setTag(self, tag):
         self.selectTagVideo = tag
+        self.pytubeTag = self.decodeTag[tag]
         print(" tag ---", tag)
 
     def setType(self, component1, component2):
@@ -42,7 +46,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.bd = Warehouse()
         self.setupUi(self, self)
         self.DescriptionLayout.hide()
-        #? self.scrollArea.hide()
+        # ? self.scrollArea.hide()
         self.descrButton.clicked.connect(lambda: self.DescriptionLayout.show(
         ) if self.DescriptionLayout.isHidden() else self.DescriptionLayout.hide())
         self.typeButton.clicked.connect(
@@ -50,8 +54,8 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.pathButton.clicked.connect(lambda: self.bd.setPath(self))
 
 
-app = QtWidgets.QApplication(sys.argv)
-
-window = MainWindow()
-window.show()
-app.exec()
+if __name__ == "__main__":
+    app = QtWidgets.QApplication(sys.argv)
+    window = MainWindow()
+    window.show()
+    app.exec()
