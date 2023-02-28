@@ -147,7 +147,8 @@ class DefaultMenu(DefaultButton):
     def __init__(self, parent, main):
         super(DefaultMenu, self).__init__(parent)
         self.main = main
-        self.dictionary = {"vd": ["360p", "720p", "1080p"]}
+        self.dictionary = {"vd": ["360p", "720p",
+                                  "1080p"], "au": ['128kb']}
         self.defineTag()
 
     def setTag(self, tag):
@@ -156,7 +157,7 @@ class DefaultMenu(DefaultButton):
 
     def defineTag(self):
         if self.main.bd.selectType in self.dictionary.keys():
-            self.setText(self.dictionary["vd"][0])
+            self.setText(self.dictionary[self.main.bd.selectType][0])
         else:
             self.setText("")
 
@@ -180,16 +181,24 @@ class DefaultMenu(DefaultButton):
 						} """)
 
         if self.main.bd.selectType == "vd":
-            Rename = menu.addAction('Res="360p"')
-            Delete = menu.addAction('Res="720p"')
-            menu_sort = menu.addAction('Res="1080p"')
+            Res1 = menu.addAction('Res="360p"')
+            Res2 = menu.addAction('Res="720p"')
+            Res3 = menu.addAction('Res="1080p"')
             result = menu.exec_(self.mapToGlobal(QtCore.QPoint(-160, -30)))
-            if Rename == result:
+            if Res1 == result:
                 self.setTag("360p")
-            elif Delete == result:
+            elif Res2 == result:
                 self.setTag("720p")
-            elif menu_sort == result:
+            elif Res3 == result:
                 self.setTag("1080p")
+            self.defineTag()
+            
+        if self.main.bd.selectType == "au":
+            Res1 = menu.addAction('audio/mp4 | 128kbps')
+            result = menu.exec_(self.mapToGlobal(QtCore.QPoint(-160, -30)))
+            if Res1 == result:
+                self.setTag('128kb')
+                self.defineTag()
 
 
 class Ui_MainWindow(object):

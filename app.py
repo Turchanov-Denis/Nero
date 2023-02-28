@@ -36,7 +36,7 @@ class Warehouse:
         self.selectTagVideo = selectTagVideo
         self.path = pathlib.Path.home().joinpath("Desktop")
         self.link = ""
-        self.decodeTag = {"360p": 18, "720p": 22}
+        self.decodeTag = {"360p": 18, "720p": 22, "1080p": 137, '128kb': 140}
         self.pytubeTag = pytubeTag
         # *YtManager
         self.yt = YtManager()
@@ -44,14 +44,18 @@ class Warehouse:
     def setTag(self, tag):
         self.selectTagVideo = tag
         self.pytubeTag = self.decodeTag[tag]
-        print(" tag ---", tag)
+        print(" tag ---", self.pytubeTag)
 
     def setType(self, component1, component2):
         self.shift(self.type)
         self.selectType = self.type[0]
         print(self.selectType)
+        dictionary = {"vd": ["360p", "720p",
+                                  "1080p"], "au": ['128kb'], "pl":["360p"]}
+        self.setTag(dictionary[self.selectType][0])
         component1.setText(self.selectType)
         component2.defineTag()
+        
 
     def setPath(self, component):
         folderpath = QtWidgets.QFileDialog.getExistingDirectory(
