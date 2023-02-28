@@ -145,6 +145,7 @@ class Warehouse:
         self.link = link
         if link:
             # Any other args, kwargs are passed to the run function
+            self.mainComponent.downloadButton.setText("In process")
             self.mainComponent.downloadButton.setEnabled(False)
             worker = Worker(self.yt.dowloadVA, self.link,
                             self.pytubeTag, self.path)
@@ -155,6 +156,7 @@ class Warehouse:
             # title = self.yt.dowloadVA(self.link, self.pytubeTag, self.path)
 
     def thread_complete(self):
+        self.mainComponent.downloadButton.setText("download")
         self.mainComponent.downloadButton.setEnabled(True)
         print("THREAD COMPLETE!")
 
@@ -204,7 +206,6 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.downloadButton.clicked.connect(
             lambda: self.bd.download(self, clipboard.paste()))
 
-        self.bd.addLabel("awd")
 
 
 if __name__ == "__main__":
