@@ -143,7 +143,7 @@ class Warehouse:
 
     def download(self, component: QtWidgets.QMainWindow, link: str):
         self.link = link
-        if link:
+        if "http" in link:
             # Any other args, kwargs are passed to the run function
             self.mainComponent.downloadButton.setText("In process")
             self.mainComponent.downloadButton.setEnabled(False)
@@ -154,6 +154,8 @@ class Warehouse:
             # worker.signals.progress.connect(self.progress_fn)
             self.threadpool.start(worker)
             # title = self.yt.dowloadVA(self.link, self.pytubeTag, self.path)
+        else:
+            self.showDialog("linkError")
 
     def thread_complete(self):
         self.mainComponent.downloadButton.setText("download")
@@ -199,17 +201,18 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.DescriptionLayout.hide()
         # ? self.scrollArea.hide()
         self.descrButton.clicked.connect(lambda: self.DescriptionLayout.show(
-        ) if self.DescriptionLayout.isHidden() else self.DescriptionLayout.hide())
+        ) if (self.DescriptionLayout.isHidden() and (len(self.scrollAreaWidgetContents.children()) == 1)) else self.DescriptionLayout.hide())
         self.typeButton.clicked.connect(
             lambda: self.bd.setType(self.typeButton, self.tagButton))
         self.pathButton.clicked.connect(lambda: self.bd.setPath(self))
         self.downloadButton.clicked.connect(
             lambda: self.bd.download(self, clipboard.paste()))
-
-
+        self.setGeometry(QRect(int(QtWidgets.QDesktopWidget().screenGeometry(-1).width()*0.7),int( QtWidgets.QDesktopWidget().screenGeometry(-1).height()*0.6), 600, 400))
+        # print(QtWidgets.QDesktopWidget().screenGeometry(-1).width())
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     window = MainWindow()
     window.show()
     app.exec()
+
