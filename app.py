@@ -1,7 +1,9 @@
 from re import match
 import sys
-from PyQt5 import QtWidgets
-from PyQt5.QtCore import *
+from PyQt5.QtCore import pyqtSignal, QObject, QRunnable, pyqtSlot, QThreadPool, QRect, Qt
+from PyQt5.QtGui import QPixmap, QIcon
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QFileDialog, QPushButton, QSystemTrayIcon, QStyle, QAction, QMenu, QDesktopWidget
+from PyQt5 import QtCore
 from layout import Ui_MainWindow, DefaultLoadedLabel
 import pathlib
 from pytube import YouTube, Playlist, exceptions
@@ -106,7 +108,7 @@ class YtManager():
 
 class Warehouse:
     # *keeping and managing
-    def __init__(self, mainComponent: QtWidgets.QMainWindow, typeI: list[str] = ["vd", "au", "pl"], selectTagVideo: str = "360p", pytubeTag: int = 18):
+    def __init__(self, mainComponent: QMainWindow, typeI: list[str] = ["vd", "au", "pl"], selectTagVideo: str = "360p", pytubeTag: int = 18):
         self.selectType = typeI[0]
         self.type: list[str] = typeI
         self.selectTagVideo: str = selectTagVideo
@@ -124,7 +126,7 @@ class Warehouse:
         self.pytubeTag = self.decodeTag[tag]
         print(" tag ---", self.pytubeTag)
 
-    def setType(self, component1: QtWidgets.QPushButton, component2: QtWidgets.QPushButton):
+    def setType(self, component1: QPushButton, component2: QPushButton):
         self.shift(self.type)
         self.selectType = self.type[0]
         print(self.selectType)
@@ -134,14 +136,14 @@ class Warehouse:
         component1.setText(self.selectType)
         component2.defineTag()
 
-    def setPath(self, component: QtWidgets.QMainWindow):
-        folderpath = QtWidgets.QFileDialog.getExistingDirectory(
+    def setPath(self, component: QMainWindow):
+        folderpath = QFileDialog.getExistingDirectory(
             component, 'Select Folder')
         if folderpath:
             self.path: str = folderpath
             print(self.path)
 
-    def download(self, component: QtWidgets.QMainWindow, link: str):
+    def download(self, component: QMainWindow, link: str):
         self.link = link
         if "http" in link:
             # Any other args, kwargs are passed to the run function
@@ -179,12 +181,12 @@ class Warehouse:
 
     @staticmethod
     def showDialog(text: str):
-        msgBox = QtWidgets.QMessageBox()
-        msgBox.setIcon(QtWidgets.QMessageBox.Information)
+        msgBox = QMessageBox()
+        msgBox.setIcon(QMessageBox.Information)
         msgBox.setText(text)
         msgBox.setWindowTitle("Event")
         msgBox.setStandardButtons(
-            QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
+            QMessageBox.Ok | QMessageBox.Cancel)
         returnValue = msgBox.exec()
 
     @staticmethod
@@ -192,12 +194,27 @@ class Warehouse:
         a.append(a.pop(0))
 
 
-class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
+class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, *args, obj=None, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
+        self.setWindowFlags(Qt.FramelessWindowHint)
+        self.setAttribute(Qt.WA_TranslucentBackground)
         # warehouse declaration
         self.bd = Warehouse(self)
         self.setupUi(self, self)
+
+        self.tray_icon = QSystemTrayIcon(self)
+        icon = QIcon()
+        icon.addPixmap(QPixmap("resource/icon/logo.png"), QIcon.Normal,
+                       QIcon.Off)
+        self.tray_icon.setIcon(icon)
+        show_action = QAction("Show", self)
+        quit_action = QAction("Exit", self)
+        hide_action = QAction("Hide", self)
+        show_action.triggered.connect(self.show)
+        hide_action.triggered.connect(self.hide)
+        quit_action.triggered.connect(self.close_app)
+
         self.DescriptionLayout.hide()
         # ? self.scrollArea.hide()
         self.descrButton.clicked.connect(lambda: self.DescriptionLayout.show(
@@ -207,12 +224,42 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
         self.pathButton.clicked.connect(lambda: self.bd.setPath(self))
         self.downloadButton.clicked.connect(
             lambda: self.bd.download(self, clipboard.paste()))
-        self.setGeometry(QRect(int(QtWidgets.QDesktopWidget().screenGeometry(-1).width()*0.7),int( QtWidgets.QDesktopWidget().screenGeometry(-1).height()*0.6), 600, 400))
+        self.setGeometry(QRect(int(QDesktopWidget().screenGeometry(-1).width()*0.7),
+                         int(QDesktopWidget().screenGeometry(-1).height()*0.59), 600, 400))
         # print(QtWidgets.QDesktopWidget().screenGeometry(-1).width())
+        tray_menu = QMenu()
+        tray_menu.setStyleSheet("font-family: \'RobotoFlex\';\n"
+                                "font-style: normal;\n"
+                                "font-weight: 200;\n"
+                                "font-size: 16px;\n"
+                                "line-height: 75.4%;\n"
+                                "/* or 14px */\n"
+                                "background: rgba(199, 199, 199, 0.0);\n"
+                                "border: 0.5px solid rgba(167, 167, 167, 0.01);\n"
+                                "color: rgba(255, 255, 255, 0.85);\n"
+                                "")
+        tray_menu.addAction(show_action)
+        tray_menu.addAction(hide_action)
+        tray_menu.addAction(quit_action)
+        self.tray_icon.setContextMenu(tray_menu)
+        self.tray_icon.show()
+        self.tray_icon.activated.connect(self.systemIcon)
+
+    def systemIcon(self, reason):
+        if reason == QSystemTrayIcon.Trigger:
+            if self.isHidden():
+                self.show()
+            else:
+                self.hide()
+
+    def close_app(self):
+        sys.exit()
+
 
 if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
+    app = QApplication(sys.argv)
     window = MainWindow()
     window.show()
-    app.exec()
 
+    app.setWindowIcon(QIcon('resource/icon/logo.png'))
+    app.exec()
