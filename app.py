@@ -85,7 +85,7 @@ class Worker(QRunnable):
 class YtManager():
     @staticmethod
     def dowloadVA(link: str, pytubeTag: int, path: str):
-        print("awd", link, pytubeTag, path)
+        print(link, pytubeTag, path)
         try:
             yt = YouTube(link)
             stream = yt.streams.get_by_itag(pytubeTag)
@@ -108,7 +108,7 @@ class YtManager():
 
 class Warehouse:
     # *keeping and managing
-    def __init__(self, mainComponent: QMainWindow, typeI: list[str] = ["vd", "au", "pl"], selectTagVideo: str = "360p", pytubeTag: int = 18):
+    def __init__(self, mainComponent: QMainWindow, typeI: list[str] = ["vd", "au"], selectTagVideo: str = "360p", pytubeTag: int = 18):
         self.selectType = typeI[0]
         self.type: list[str] = typeI
         self.selectTagVideo: str = selectTagVideo
@@ -174,7 +174,6 @@ class Warehouse:
         elif title == "otherError":
             return
         else:
-            print("something is wrong")
             loadedLabel = DefaultLoadedLabel(title, self.path)
             self.mainComponent.verticalLayout.addWidget(loadedLabel)
             # *loaded label
@@ -197,7 +196,7 @@ class Warehouse:
 class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self, *args, obj=None, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
-        self.setWindowFlags(Qt.FramelessWindowHint)
+        self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
         self.setAttribute(Qt.WA_TranslucentBackground)
         # warehouse declaration
         self.bd = Warehouse(self)
