@@ -1,3 +1,6 @@
 quest.txt
 __pycache__/
 srcUI/pyuic5.exe
+dist/
+build/
+editor.spec

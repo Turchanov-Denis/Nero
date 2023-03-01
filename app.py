@@ -1,16 +1,20 @@
-from re import match
-import sys
+import sys,os
 from PyQt5.QtCore import pyqtSignal, QObject, QRunnable, pyqtSlot, QThreadPool, QRect, Qt
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QFileDialog, QPushButton, QSystemTrayIcon, QStyle, QAction, QMenu, QDesktopWidget
-from PyQt5 import QtCore
 from layout import Ui_MainWindow, DefaultLoadedLabel
 import pathlib
 from pytube import YouTube, Playlist, exceptions
 import clipboard
 import traceback
 
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
 
+    return os.path.join(base_path, relative_path)
 class WorkerSignals(QObject):
     '''
     Defines the signals available from a running worker thread.
@@ -204,7 +208,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.tray_icon = QSystemTrayIcon(self)
         icon = QIcon()
-        icon.addPixmap(QPixmap("resource/icon/logo.png"), QIcon.Normal,
+        icon.addPixmap(QPixmap(resource_path("resource\logo.png")), QIcon.Normal,
                        QIcon.Off)
         self.tray_icon.setIcon(icon)
         show_action = QAction("Show", self)
@@ -226,6 +230,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setGeometry(QRect(int(QDesktopWidget().screenGeometry(-1).width()*0.7),
                          int(QDesktopWidget().screenGeometry(-1).height()*0.59), 600, 400))
         # print(QtWidgets.QDesktopWidget().screenGeometry(-1).width())
+        icon = QIcon(resource_path("resource\link.png"))
+        
+        self.pathButton.setIcon(icon)
         tray_menu = QMenu()
         tray_menu.setStyleSheet("font-family: \'RobotoFlex\';\n"
                                 "font-style: normal;\n"
@@ -259,6 +266,5 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = MainWindow()
     window.show()
-
-    app.setWindowIcon(QIcon('resource/icon/logo.png'))
+    app.setWindowIcon(QIcon(resource_path("resource\logo.png")))
     app.exec()

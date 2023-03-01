@@ -11,6 +11,10 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import os
 
+
+
+
+
 class DefaultLoadedLabel(QtWidgets.QFrame):
     def __init__(self, name: str = "Name////////////////", path: str = ""):
         super(DefaultLoadedLabel, self).__init__()
@@ -195,7 +199,6 @@ class DefaultMenu(DefaultButton):
                 self.setTag("720p")
             elif Res3 == result:
                 self.setTag("1080p")
-            self.defineTag()
 
         if self.main.bd.selectType == "au":
             Res1 = menu.addAction('audio/mp4 | 128kbps')
@@ -237,10 +240,6 @@ class Ui_MainWindow(object):
         # path button
         self.pathButton = DefaulIconButton(self.ManagePannel)
         self.pathButton.setGeometry(QtCore.QRect(66, 12, 31, 28))
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(
-            "C:\\Users\\turch\\Desktop\\PyProject\\Nero\\srcUI\\../resource/icon/file.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pathButton.setIcon(icon)
         self.pathButton.setObjectName("pathButton")
         # decoration border
         self.border = QtWidgets.QLabel(self.ManagePannel)
