@@ -12,9 +12,6 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import os
 
 
-
-
-
 class DefaultLoadedLabel(QtWidgets.QFrame):
     def __init__(self, name: str = "Name////////////////", path: str = ""):
         super(DefaultLoadedLabel, self).__init__()

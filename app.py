@@ -1,4 +1,5 @@
-import sys,os
+import sys
+import os
 from PyQt5.QtCore import pyqtSignal, QObject, QRunnable, pyqtSlot, QThreadPool, QRect, Qt
 from PyQt5.QtGui import QPixmap, QIcon
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QFileDialog, QPushButton, QSystemTrayIcon, QStyle, QAction, QMenu, QDesktopWidget
@@ -7,6 +8,8 @@ import pathlib
 from pytube import YouTube, Playlist, exceptions
 import clipboard
 import traceback
+import plyer
+
 
 def resource_path(relative_path):
     try:
@@ -15,6 +18,8 @@ def resource_path(relative_path):
         base_path = os.path.abspath(".")
 
     return os.path.join(base_path, relative_path)
+
+
 class WorkerSignals(QObject):
     '''
     Defines the signals available from a running worker thread.
@@ -149,7 +154,7 @@ class Warehouse:
 
     def download(self, component: QMainWindow, link: str):
         self.link = link
-        if "http" in link:
+        if "https://www.youtube.com/" in link:
             # Any other args, kwargs are passed to the run function
             self.mainComponent.downloadButton.setText("In process")
             self.mainComponent.downloadButton.setEnabled(False)
@@ -180,6 +185,10 @@ class Warehouse:
         else:
             loadedLabel = DefaultLoadedLabel(title, self.path)
             self.mainComponent.verticalLayout.addWidget(loadedLabel)
+            plyer.notification.notify(message=f'{title[:20]}...',
+                                      app_name='Nero',
+                                      title=f'Success downloaded',
+                                      app_icon=resource_path("resource\logo.ico"))
             # *loaded label
 
     @staticmethod
@@ -231,7 +240,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                          int(QDesktopWidget().screenGeometry(-1).height()*0.59), 600, 400))
         # print(QtWidgets.QDesktopWidget().screenGeometry(-1).width())
         icon = QIcon(resource_path("resource\link.png"))
-        
+
         self.pathButton.setIcon(icon)
         tray_menu = QMenu()
         tray_menu.setStyleSheet("font-family: \'RobotoFlex\';\n"
@@ -250,7 +259,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.tray_icon.setContextMenu(tray_menu)
         self.tray_icon.show()
         self.tray_icon.activated.connect(self.systemIcon)
-
+        
     def systemIcon(self, reason):
         if reason == QSystemTrayIcon.Trigger:
             if self.isHidden():
