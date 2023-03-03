@@ -8,7 +8,7 @@ import pathlib
 from pytube import YouTube, Playlist, exceptions
 import clipboard
 import traceback
-import plyer
+from win10toast import ToastNotifier
 
 
 def resource_path(relative_path):
@@ -97,9 +97,15 @@ class YtManager():
         print(link, pytubeTag, path)
         try:
             yt = YouTube(link)
-            stream = yt.streams.get_by_itag(pytubeTag)
-            stream.download(output_path=path)
-            return yt.title
+            if pytubeTag != 251:
+                title = yt.title
+                stream = yt.streams.get_by_itag(pytubeTag)
+                stream.download(output_path=path)
+            else: 
+                title = yt.title
+                yt.streams.filter(only_audio=True).first().download(output_path=path)
+            
+            return title
         except exceptions.RegexMatchError:
             return "LinkError"
         except exceptions.VideoPrivate:
@@ -123,7 +129,7 @@ class Warehouse:
         self.selectTagVideo: str = selectTagVideo
         self.path: str = str(pathlib.Path.home().joinpath("Desktop"))
         self.link = ""
-        self.decodeTag = {"360p": 18, "720p": 22, "1080p": 137, '128kb': 140}
+        self.decodeTag = {"360p": 18, "720p": 22, "1080p": 137, '128kb': 251}
         self.pytubeTag: int = pytubeTag
         # *YtManager
         self.yt = YtManager()
@@ -183,12 +189,16 @@ class Warehouse:
         elif title == "otherError":
             return
         else:
-            loadedLabel = DefaultLoadedLabel(title, self.path)
+            print(title)
+            loadedLabel = DefaultLoadedLabel(str(title), self.path)
             self.mainComponent.verticalLayout.addWidget(loadedLabel)
-            plyer.notification.notify(message=f'{title[:20]}...',
-                                      app_name='Nero',
-                                      title=f'Success downloaded',
-                                      app_icon=resource_path("resource\logo.ico"))
+            toaster = ToastNotifier()
+            toaster.show_toast(title = f'{title[:15]}...',
+                                      msg = 'Success downloaded',
+                                      icon_path=resource_path("resource\logo.ico"),
+                                      duration=10,
+                                      threaded=True
+                                      )
             # *loaded label
 
     @staticmethod
