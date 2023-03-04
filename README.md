@@ -1,6 +1,11 @@
 # Nero: Pytube [ interface ]
+  Allows you to download video / audio from YouTube in one click
+## Tutorial
+- Download Nero.exe from repository
+- After run check tray menu [ try left and right click by tray icon ]
+  
+![ Nero ](./public/NeroTutorial.png)
 
-Allows you to download video / audio from YouTube in one click
                                                                           
                                       %(                                        
                                        #@                                       
