@@ -83,7 +83,7 @@ class DefaultLoadedLabel(QtWidgets.QFrame):
                                            "background: rgba(34, 34, 34, 0);")
         self.LoadLabel_path.setText(self.path)
         self.LoadLabel_name.setText(self.name)
-        self.LoadLabel_progress.setText(">>Profress: 100%")
+        self.LoadLabel_progress.setText(">>Progress: 100%")
         self.LoadLabel_close.setText("X")
         self.LoadLabel_close.clicked.connect(lambda: self.deleteLater())
 

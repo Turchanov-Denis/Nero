@@ -9,8 +9,7 @@ from pytube import YouTube, Playlist, exceptions
 import clipboard
 import traceback
 from win10toast import ToastNotifier
-
-
+        
 def resource_path(relative_path):
     try:
         base_path = sys._MEIPASS
@@ -104,13 +103,12 @@ class YtManager():
             else: 
                 title = yt.title
                 yt.streams.filter(only_audio=True).first().download(output_path=path)
-            
             return title
         except exceptions.RegexMatchError:
             return "LinkError"
         except exceptions.VideoPrivate:
             return "PrivateError"
-
+    
     @staticmethod
     def dowloadPl(link: str, pytubeTag: int):
         try:
